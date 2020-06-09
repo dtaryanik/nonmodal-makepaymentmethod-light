@@ -1,0 +1,32 @@
+
+
+div#portalOneContainer:before {
+  content: "";
+  text-align: center;
+}
+
+#portalOneContainer {
+  max-width: 606px;
+  max-height: 689px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.5);
+  border: solid 1px #707070;
+  padding: 25px 25px 25px;
+  padding-bottom: 20%;
+  margin: 0 auto;
+  //background-color: #26262e !important;
+}
+
+
+.portalOneContainer {
+  width: 100%;
+  height: 0;
+  position: relative;
+}
+
+.portalOneContainer iframe {
+	position: absolute;
+	width:100%;
+  height:100%;
+  padding-bottom: 50%;
+}

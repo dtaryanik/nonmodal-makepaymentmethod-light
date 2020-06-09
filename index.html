@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<title>PortalOne#doc-type-savePaymentMethod</title>
+    
+	<script src="https://code.jquery.com/jquery-2.2.1.min.js" type="text/javascript"></script>
+	<script src="https://testportalone.processonepayments.com/Api/Api/Cdn/GenericModalV2/assets/js/PortalOne.js" type="text/javascript"></script>
+
+
+
+</style>
+	
+</head>
+<body>
+
+<h1> Demo of Inline V2 Generic Modal</h1>
+<h2> "makePayment" method </h2>
+<h4> This page is intended to provide a preview of the "Look and Feel" of the visual design for the modal. This file is NOT INTENDED to be used as a representation of how to configure the modal </h4>
+<h3> Please reference our full documentation for details: <a href="https://developers.processonepayments.com/Help/Documentation/PortalOne"> https://developers.processonepayments.com/Help/Documentation/PortalOne </a> </h3>
+
+<p> Test Data can be found <a href="https://developers.processonepayments.com/Help/Documentation/PortalOne#doc-test-data"> here. </a> </p>
+Placeholder before DIV: 
+<br>
+<div id="portalOneContainer"/>
+
+After DIV: 
+
+<script>
+
+//The function below needs to be called to initialize the API.
+//And it needs to be placed after the "portalOneContainer" div rendered
+$('#portalOneContainer').portalOne();
+
+var xhttp = new XMLHttpRequest();
+xhttp.overrideMimeType("application/json");
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) { 
+       var resp = JSON.parse(xhttp.responseText);
+
+	   var sessionID = resp.PortalOneSessionKey;
+	   $('#portalOneContainer').data('portalOne').makePayment({
+      'paymentCategory': 'CreditCard',
+      'feeContext': 'PaymentWithFee',
+      'amountContext': 'SelectOrEnterAmount',
+      'minAmountDue': '707.98',
+      'accountBalance': '1647.88',
+      'billingZip': '53703',
+      'billingAddressStreet': '201 W. Mifflin St',
+      'policyHolderName': 'John Smith',
+      'referenceNumber': '4450354958',
+      'confirmationDisplay': 'false',
+      'saveOption': '',
+      "clientReferenceData1": "POL-12345",
+      "clientReferenceData2": "06-20-2020",
+      "clientReferenceData3": "POL-12345-ClientReferenceData3",
+      "clientReferenceData4": "POL-12345-ClientReferenceData4",
+      "clientReferenceData5": "POL-12345-ClientReferenceData5",
+      'accountGroupCode': 'PersonalAuto',
+			'sessionId': sessionID,
+			'displayMode': 'inline'
+		});
+        
+    }
+	
+};
+/*
+.../Session/Create should be called from the server side.
+In order to protect your security, do not expose your PortalOne Authentication key to anyone.
+Ths function and authentication key are provided for demonstrational purposes only!!.
+*/
+xhttp.open("GET", "https://testportalone.processonepayments.com/Api/Api/Session/Create?portalOneAuthenticationKey=b6069beb-23e1-48cf-8a10-9b78d3acfcb0", true);
+//xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
+xhttp.send();
+//This file is used for checking the functionality and or visual design of the modal.\ This file is NOT INTENDED to be used as a representation of how to configure the modal 
+//Please follow the developer page for full documentation: https://developers.processonepayments.com/Help/ 
+//here is a link https://developers.processonepayments.com/Help/Documentation/PortalOne#doc-type-paymentInfo
+//you can access each field inside the data object with a dot (.) operator. ( ex: data.transactionId )
+//by the way, you can call this object 'data' or 'purpleUnicorns' if you like, but you have to reference the fields just the way they are described in the documentation. So, parameter.cardType will work but parameter.cardtype //will fail.
+
+$('#portalOneContainer')
+    .on('portalOne.paymentComplete', function(e, data) {
+        console.info(
+            new Date() + ' portalOne.paymentComplete. Transaction id is ',
+            data.transactionId
+        );
+
+        if(data.acknowledge){
+            data.acknowledge();
+        }
+    });
+
+</script>
+
+
+
+
+
+
+</body>
+<footer> <h4> This page is intended to provide a preview of the "Look and Feel" of the visual design for the modal. This file is NOT INTENDED to be used as a representation of how to configure the modal </h4> </footer>
+</html>
